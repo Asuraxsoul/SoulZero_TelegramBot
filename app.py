@@ -24,6 +24,9 @@ Fret not, I am here to help!"""
 # start the flask app
 app = Flask(__name__)
 
+# Telegram bot description
+bot.setChatDescription(description=bot_description)
+
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -37,9 +40,6 @@ def respond():
     text = update.message.text.encode('utf-8').decode()
     # for debugging purposes only
     print("got text message :", text)
-
-    # Telegram bot description
-    #bot.setChatDescription(chat_id=chat_id, description=bot_description)
 
     # the first time you chat with the bot AKA the welcoming message
     if text == "/start":
