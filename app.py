@@ -15,8 +15,8 @@ help_message = """/place to enquire Singapore's bouldering gyms categorized by l
 /gym_name to enquire more details about the gym,
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
-welcome_message = "Welcome to " + BOTNAME + """,
-this bot will help you to find a bouldering gym in Singapore!\n""" + help_message
+welcome_message = "Welcome to " + BOTNAME + ", this bot will help you to find a bouldering gym in Singapore!\n" + \
+                  help_message
 error_message = """Bot does not understand your input, please try typing /help for help"""
 
 # start the flask app
@@ -39,9 +39,12 @@ def respond():
     # the first time you chat with the bot AKA the welcoming message
     if text == "/start":
         # send the welcoming message
-        bot.sendMessage(chat_id=chat_id, text=welcome_message, reply_to_message_id=msg_id)
+        bot.sendMessage(chat_id=chat_id, text=welcome_message)
 
     elif text == "/help":
+        bot.sendMessage(chat_id=chat_id, text=help_message, reply_to_message_id=msg_id)
+
+    elif text == "/places":
         bot.sendMessage(chat_id=chat_id, text=help_message, reply_to_message_id=msg_id)
 
     else:

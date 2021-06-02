@@ -3,7 +3,7 @@
 ### Telegram bot username: @SoulZero_bot
 
 ## Ideas
-### /place: 
+### /places: 
 #### 1. notify north south east west central option
 #### 2. give user a list of bouldering gyms
 
