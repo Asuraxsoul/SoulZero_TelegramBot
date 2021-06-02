@@ -39,7 +39,7 @@ def respond():
     print("got text message :", text)
 
     # Telegram bot description
-    bot.setChatDescription(chat_id=chat_id, description=bot_description)
+    #bot.setChatDescription(chat_id=chat_id, description=bot_description)
 
     # the first time you chat with the bot AKA the welcoming message
     if text == "/start":
