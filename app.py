@@ -5,8 +5,19 @@ from telebot.credentials import bot_token, bot_user_name, URL
 
 global bot
 global TOKEN
+global BOTNAME
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
+BOTNAME = bot_user_name
+
+help_message = """/place to enquire Singapore's bouldering gyms categorized by locations,
+                    /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
+                    /gym_name to enquire more details about the gym,
+                    /feedback to feedback inaccurate information provided or improvements to the bot,
+                    /help to enquire on available commands."""
+welcome_message = "Welcome to " + BOTNAME + \
+                  """, this bot will help you to find a bouldering gym in Singapore!""" + help_message
+error_message = """Bot does not understand your input, please try typing /help for help"""
 
 # start the flask app
 app = Flask(__name__)
@@ -24,14 +35,14 @@ def respond():
     text = update.message.text.encode('utf-8').decode()
     # for debugging purposes only
     print("got text message :", text)
+
     # the first time you chat with the bot AKA the welcoming message
     if text == "/start":
-        # print the welcoming message
-        bot_welcome = """Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to 
-        generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with 
-        an avatar for your name. """
         # send the welcoming message
-        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
+        bot.sendMessage(chat_id=chat_id, text=welcome_message, reply_to_message_id=msg_id)
+
+    elif text == "/help":
+        bot.sendMessage(chat_id=chat_id, text=help_message, reply_to_message_id=msg_id)
 
     else:
         try:
