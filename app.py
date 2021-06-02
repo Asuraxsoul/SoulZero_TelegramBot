@@ -24,9 +24,6 @@ Fret not, I am here to help!"""
 # start the flask app
 app = Flask(__name__)
 
-# Telegram bot description
-bot.setChatDescription(token=TOKEN, description=bot_description)
-
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
