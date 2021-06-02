@@ -11,12 +11,13 @@ bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 
 help_message = """/place to enquire Singapore's bouldering gyms categorized by locations,
-                    /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
-                    /gym_name to enquire more details about the gym,
-                    /feedback to feedback inaccurate information provided or improvements to the bot,
-                    /help to enquire on available commands."""
-welcome_message = "Welcome to " + BOTNAME + \
-                  """, this bot will help you to find a bouldering gym in Singapore!""" + help_message
+/nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
+/gym_name to enquire more details about the gym,
+/feedback to feedback inaccurate information provided or improvements to the bot,
+/help to enquire on available commands."""
+welcome_message = "Welcome to " + BOTNAME + "," + \
+                  """this bot will help you to find a bouldering gym in Singapore!""" + \
+                  help_message
 error_message = """Bot does not understand your input, please try typing /help for help"""
 
 # start the flask app
@@ -62,6 +63,7 @@ def respond():
     return 'ok'
 
 
+# To check if heroku server is still hosting
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
     # we use the bot object to link the bot to our app which live
