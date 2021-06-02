@@ -15,9 +15,8 @@ help_message = """/place to enquire Singapore's bouldering gyms categorized by l
 /gym_name to enquire more details about the gym,
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
-welcome_message = "Welcome to " + BOTNAME + "," + \
-                  """this bot will help you to find a bouldering gym in Singapore!""" + \
-                  help_message
+welcome_message = "Welcome to " + BOTNAME + """,
+                  this bot will help you to find a bouldering gym in Singapore!\n""" + help_message
 error_message = """Bot does not understand your input, please try typing /help for help"""
 
 # start the flask app
