@@ -50,6 +50,7 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
         # receive and record user feedback
+        update = telegram.Update.de_json(request.get_json(force=True), bot)
         feedback = update.message.text.encode('utf-8').decode()
 
         # message me the response
