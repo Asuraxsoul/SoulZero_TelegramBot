@@ -40,13 +40,13 @@ def respond():
     # for debugging purposes only
     print("got text message :", text)
 
-    if isFeedback:
-        global isFeedback
-        isFeedback = False
-        bot.sendMessage(chat_id=my_chat_id, text=text)
-        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+    # if isFeedback:
+    #     global isFeedback
+    #     isFeedback = False
+    #     bot.sendMessage(chat_id=my_chat_id, text=text)
+    #     bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
-    elif text == "/start":
+    if text == "/start":
         bot.sendMessage(chat_id=chat_id, text=welcome_message)
 
     elif text == "/help":
