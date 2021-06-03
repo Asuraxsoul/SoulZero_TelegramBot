@@ -65,7 +65,7 @@ def respond():
                     [telegram.KeyboardButton('East')],
                     [telegram.KeyboardButton('West')],
                     [telegram.KeyboardButton('Central')]]
-        reply_markup = telegram.KeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
 
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
         # activate choice
@@ -79,6 +79,10 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are xxx.")
 
     else:
+        # for loop to find such a gym
+        # TODO: Implement function
+        # no such command, error message
+        bot.sendMessage(chat_id=chat_id, text=error_message)
         try:
             # clear the message we got from any non alphabets
             text = re.sub(r"\W", "_", text)
