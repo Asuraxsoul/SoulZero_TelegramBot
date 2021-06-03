@@ -43,6 +43,8 @@ def respond():
     if isFeedback:
         bot.sendMessage(chat_id=my_chat_id, text=text)
         bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+        global isFeedback
+        isFeedback = False
 
     # the first time you chat with the bot AKA the welcoming message
     elif text == "/start":
