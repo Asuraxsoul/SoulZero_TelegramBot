@@ -7,7 +7,6 @@ global bot
 global TOKEN
 global BOTNAME
 global MY_CHAT_ID
-
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
@@ -42,23 +41,27 @@ def respond():
 
     global isFeedback
 
-    if text == "/start":
-        bot.sendMessage(chat_id=chat_id, text=welcome_message)
-
-    elif isFeedback:
+    if isFeedback:
         isFeedback = False
-        bot.sendMessage(chat_id=my_chat_id, text=text)
+        feedback = "Feedback: " + text
+        bot.sendMessage(chat_id=my_chat_id, text=feedback)
         bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
-
-    elif text == "/help":
-        bot.sendMessage(chat_id=chat_id, text=help_message)
 
     elif text == "/feedback":
         isFeedback = True
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
+    elif text == "/start":
+        bot.sendMessage(chat_id=chat_id, text=welcome_message)
+
+    elif text == "/help":
+        bot.sendMessage(chat_id=chat_id, text=help_message)
+
     elif text == "/places":
-        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?")
+        kb = [[telegram.KeyboardButton('/command1')],
+              [telegram.KeyboardButton('/command2')]]
+        kb_markup = telegram.ReplyKeyboardMarkup(kb)
+        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=kb_markup)
         # activate choice
         # if north, south, east, west, central
         # then send the whole list of bouldering gyms
