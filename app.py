@@ -7,10 +7,12 @@ global bot
 global TOKEN
 global BOTNAME
 global MY_CHAT_ID
+global isFeedback
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
+isFeedback = False
 
 help_message = """/place to enquire Singapore's bouldering gyms categorized by locations,
 /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
@@ -38,8 +40,12 @@ def respond():
     # for debugging purposes only
     print("got text message :", text)
 
+    if isFeedback:
+        bot.sendMessage(chat_id=my_chat_id, text=text)
+        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+
     # the first time you chat with the bot AKA the welcoming message
-    if text == "/start":
+    elif text == "/start":
         # send the welcoming message
         bot.sendMessage(chat_id=chat_id, text=welcome_message)
 
@@ -48,9 +54,9 @@ def respond():
 
     elif text == "/feedback":
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
-
         # receive, record and send user feedback
-        respond_feedback()
+        global isFeedback
+        isFeedback = True
 
     elif text == "/places":
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?")
@@ -77,23 +83,6 @@ def respond():
                             reply_to_message_id=msg_id)
 
     return 'ok'
-
-
-@app.route('/{}'.format(TOKEN), methods=['POST'])
-def respond_feedback():
-    # retrieve the message in JSON and then transform it to Telegram object
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
-
-    chat_id = update.message.chat.id
-    msg_id = update.message.message_id
-
-    # Telegram understands UTF-8, so encode text for unicode compatibility
-    text = update.message.text.encode('utf-8').decode()
-    feedback = update.message.text.encode('utf-8').decode()
-
-    # message me the response
-    bot.sendMessage(chat_id=MY_CHAT_ID, text="Feedback: " + feedback)
-    bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
 
 # To check if heroku server is still hosting
