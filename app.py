@@ -35,7 +35,7 @@ def respond():
 
     if update.message is None:
         chat_id = update.callback_query.message.chat.id
-        data = update.callback_query.message.data
+        data = update.callback_query.data
         bot.sendMessage(chat_id=chat_id, text=data)
 
     else:
