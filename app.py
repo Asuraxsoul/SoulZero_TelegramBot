@@ -63,6 +63,7 @@ def respond():
         reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
+        bot.answerCallbackQuery(chat_id=chat_id, text="yes")
         # activate choice
         # if north, south, east, west, central
         # then send the whole list of bouldering gyms
