@@ -41,24 +41,21 @@ def respond():
     print("got text message :", text)
 
     if isFeedback:
-        bot.sendMessage(chat_id=my_chat_id, text=text)
-        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
         global isFeedback
         isFeedback = False
+        bot.sendMessage(chat_id=my_chat_id, text=text)
+        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
-    # the first time you chat with the bot AKA the welcoming message
     elif text == "/start":
-        # send the welcoming message
         bot.sendMessage(chat_id=chat_id, text=welcome_message)
 
     elif text == "/help":
         bot.sendMessage(chat_id=chat_id, text=help_message)
 
     elif text == "/feedback":
-        bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
-        # receive, record and send user feedback
         global isFeedback
         isFeedback = True
+        bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
     elif text == "/places":
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?")
