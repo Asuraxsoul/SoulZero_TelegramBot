@@ -1,25 +1,25 @@
 import re
 from flask import Flask, request
 import telegram
-from telebot.credentials import bot_token, bot_user_name, URL
+from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
 
 global bot
 global TOKEN
 global BOTNAME
+global MY_CHAT_ID
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
+MY_CHAT_ID = my_chat_id
 
 help_message = """/place to enquire Singapore's bouldering gyms categorized by locations,
 /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
 /gym_name to enquire more details about the gym,
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
-welcome_message = "Welcome to " + BOTNAME + ", this bot will help you to find a bouldering gym in Singapore!\n" + \
-                  help_message
+welcome_message = "Welcome to Boulder_SG @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
+                  "Singapore!\n" + help_message
 error_message = """Bot does not understand your input, please try typing /help for help"""
-bot_description = """Want to find a place to boulder in Singapore?
-Fret not, I am here to help!"""
 
 # start the flask app
 app = Flask(__name__)
@@ -48,7 +48,9 @@ def respond():
 
     elif text == "/feedback":
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
-        # email me the response
+
+        # message me the response
+        bot.sendMessage(chat_id=MY_CHAT_ID, text="Thank you, your feedback has been recorded!")
         bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
     elif text == "/places":
