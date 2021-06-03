@@ -25,14 +25,6 @@ error_message = """Bot does not understand your input, please try typing /help f
 app = Flask(__name__)
 
 
-@app.route('/feedback', methods=['POST'])
-def respond_feedback():
-    # retrieve the message in JSON and then transform it to Telegram object
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
-    text = update.message.text.encode('utf-8').decode()
-    return text
-
-
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
@@ -58,7 +50,7 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
         # receive and record user feedback
-        feedback = await respond_feedback()
+        feedback = update.message.text.encode('utf-8').decode()
 
         # message me the response
         bot.sendMessage(chat_id=MY_CHAT_ID, text="Feedback: " + feedback)
