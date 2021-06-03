@@ -33,70 +33,67 @@ def respond():
     print("update message: ", update)
     print("update message2: ", update.message)
 
-    if update.message is None:
-        chat_id = update.callback_query.message.chat.id
-        data = update.callback_query.data
-        bot.sendMessage(chat_id=chat_id, text=data)
+    chat_id = update.message.chat.id
+    msg_id = update.message.message_id
+
+    # Telegram understands UTF-8, so encode text for unicode compatibility
+    text = update.message.text.encode('utf-8').decode()
+    # for debugging purposes only
+    print("got text message: ", text)
+
+    global isFeedback
+
+    if isFeedback:
+        isFeedback = False
+        feedback = "Feedback: " + text
+        bot.sendMessage(chat_id=my_chat_id, text=feedback)
+        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+
+    elif text == "/feedback":
+        isFeedback = True
+        bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
+
+    elif text == "/start":
+        bot.sendMessage(chat_id=chat_id, text=welcome_message)
+
+    elif text == "/help":
+        bot.sendMessage(chat_id=chat_id, text=help_message)
+
+    elif text == "/places":
+        keyboard = [[telegram.KeyboardButton('North')],
+                    [telegram.KeyboardButton('South')],
+                    [telegram.KeyboardButton('East')],
+                    [telegram.KeyboardButton('West')],
+                    [telegram.KeyboardButton('Central')]]
+        reply_markup = telegram.KeyboardMarkup(keyboard)
+
+        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
+        # activate choice
+        # if north, south, east, west, central
+        # then send the whole list of bouldering gyms
+
+    elif text == "North":
+        bot.sendMessage(chat_id=chat_id, text="Which part of ?")
+
+    elif text == "/nearme":
+        bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are xxx.")
 
     else:
-        chat_id = update.message.chat.id
-        msg_id = update.message.message_id
+        try:
+            # clear the message we got from any non alphabets
+            text = re.sub(r"\W", "_", text)
+            # create the api link for the avatar based on http://avatars.adorable.io/
+            url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
+            # reply with a photo to the name the user sent,
+            # note that you can send photos by url and telegram will fetch it for you
+            bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
+        except Exception:
+            # if things went wrong
+            bot.sendMessage(chat_id=chat_id,
+                            text="There was a problem in the name you used, please enter different name",
+                            reply_to_message_id=msg_id)
 
-        # Telegram understands UTF-8, so encode text for unicode compatibility
-        text = update.message.text.encode('utf-8').decode()
-        # for debugging purposes only
-        print("got text message: ", text)
-
-        global isFeedback
-
-        if isFeedback:
-            isFeedback = False
-            feedback = "Feedback: " + text
-            bot.sendMessage(chat_id=my_chat_id, text=feedback)
-            bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
-
-        elif text == "/feedback":
-            isFeedback = True
-            bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
-
-        elif text == "/start":
-            bot.sendMessage(chat_id=chat_id, text=welcome_message)
-
-        elif text == "/help":
-            bot.sendMessage(chat_id=chat_id, text=help_message)
-
-        elif text == "/places":
-            keyboard = [[telegram.InlineKeyboardButton('/command1', callback_data='1')],
-                        [telegram.InlineKeyboardButton('/command2', callback_data='2')]]
-            reply_markup = telegram.InlineKeyboardMarkup(keyboard)
-
-            bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
-            # activate choice
-            # if north, south, east, west, central
-            # then send the whole list of bouldering gyms
-
-        elif text == "1":
-            bot.sendMessage(chat_id=chat_id, text="Which part of ?")
-
-        elif text == "/nearme":
-            bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are xxx.")
-
-        else:
-            try:
-                # clear the message we got from any non alphabets
-                text = re.sub(r"\W", "_", text)
-                # create the api link for the avatar based on http://avatars.adorable.io/
-                url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
-                # reply with a photo to the name the user sent,
-                # note that you can send photos by url and telegram will fetch it for you
-                bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
-            except Exception:
-                # if things went wrong
-                bot.sendMessage(chat_id=chat_id,
-                                text="There was a problem in the name you used, please enter different name",
-                                reply_to_message_id=msg_id)
-
-        return 'ok'
+    return 'ok'
 
 
 # To check if heroku server is still hosting
