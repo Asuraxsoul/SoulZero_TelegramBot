@@ -58,8 +58,8 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text=help_message)
 
     elif text == "/places":
-        keyboard = [[telegram.InlineKeyboardButton('/command1')],
-                    [telegram.InlineKeyboardButton('/command2')]]
+        keyboard = [[telegram.InlineKeyboardButton('/command1', callback_data='1')],
+                    [telegram.InlineKeyboardButton('/command2', callback_data='2')]]
         reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
