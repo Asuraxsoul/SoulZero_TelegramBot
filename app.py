@@ -7,7 +7,7 @@ global bot
 global TOKEN
 global BOTNAME
 global MY_CHAT_ID
-global isFeedback
+
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
@@ -40,14 +40,14 @@ def respond():
     # for debugging purposes only
     print("got text message :", text)
 
-    # if isFeedback:
-    #     global isFeedback
-    #     isFeedback = False
-    #     bot.sendMessage(chat_id=my_chat_id, text=text)
-    #     bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
-
     if text == "/start":
         bot.sendMessage(chat_id=chat_id, text=welcome_message)
+
+    elif isFeedback:
+        global isFeedback
+        isFeedback = False
+        bot.sendMessage(chat_id=my_chat_id, text=text)
+        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
     elif text == "/help":
         bot.sendMessage(chat_id=chat_id, text=help_message)
