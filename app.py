@@ -58,7 +58,7 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
         # receive and record user feedback
-        feedback = respond_feedback()
+        feedback = await respond_feedback()
 
         # message me the response
         bot.sendMessage(chat_id=MY_CHAT_ID, text="Feedback: " + feedback)
