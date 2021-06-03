@@ -49,13 +49,8 @@ def respond():
     elif text == "/feedback":
         bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
 
-        # receive and record user feedback
-        respond()
-        feedback = update.message.text.encode('utf-8').decode()
-
-        # message me the response
-        bot.sendMessage(chat_id=MY_CHAT_ID, text="Feedback: " + feedback)
-        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+        # receive, record and send user feedback
+        respond_feedback()
 
     elif text == "/places":
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?")
@@ -82,6 +77,23 @@ def respond():
                             reply_to_message_id=msg_id)
 
     return 'ok'
+
+
+@app.route('/{}'.format(TOKEN), methods=['POST'])
+def respond_feedback():
+    # retrieve the message in JSON and then transform it to Telegram object
+    update = telegram.Update.de_json(request.get_json(force=True), bot)
+
+    chat_id = update.message.chat.id
+    msg_id = update.message.message_id
+
+    # Telegram understands UTF-8, so encode text for unicode compatibility
+    text = update.message.text.encode('utf-8').decode()
+    feedback = update.message.text.encode('utf-8').decode()
+
+    # message me the response
+    bot.sendMessage(chat_id=MY_CHAT_ID, text="Feedback: " + feedback)
+    bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
 
 
 # To check if heroku server is still hosting
