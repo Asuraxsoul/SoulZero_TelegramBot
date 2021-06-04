@@ -35,14 +35,14 @@ app = Flask(__name__)
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
-    update = telegram.Update.de_json(request.get_json(force=True), bot)
-
-    print("update: ", update)
-    print("update2: ", update.message)
-
-    chat_id = update.message.chat.id
-
-    global can_send_location
+    # update = telegram.Update.de_json(request.get_json(force=True), bot)
+    #
+    # print("update: ", update)
+    # print("update2: ", update.message)
+    #
+    # chat_id = update.message.chat.id
+    #
+    # global can_send_location
 
     # location = update.message.location
     # if update.message.location is not None and can_send_location:
@@ -58,133 +58,134 @@ def respond():
     # else:
     # Telegram understands UTF-8, so encode text for unicode compatibility
 
-    text = update.message.text.encode('utf-8').decode()
-
-    # for debugging purposes only
-    print("got text message: ", text)
-
-    global isFeedback
-
-    if isFeedback:
-        isFeedback = False
-        feedback = "Feedback: " + text
-        bot.sendMessage(chat_id=my_chat_id, text=feedback)
-        bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
-
-    elif text == "/feedback":
-        isFeedback = True
-        bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
-
-    elif text == "/start":
-        bot.sendMessage(chat_id=chat_id, text=welcome_message)
-
-    elif text == "/help":
-        bot.sendMessage(chat_id=chat_id, text=help_message)
-
-    elif text == "/places":
-        keyboard = [[telegram.KeyboardButton('🔥 North')],
-                    [telegram.KeyboardButton('🌊 South')],
-                    [telegram.KeyboardButton('🎋 East')],
-                    [telegram.KeyboardButton('🎐 West')],
-                    [telegram.KeyboardButton('⛰ Central')]]
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-
-        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗",
-                        reply_markup=reply_markup)
-        # activate choice
-
-    # if north, south, east, west or central, then send the whole list of bouldering gyms -------------------------
-    elif text == "🔥 North":
-        keyboard = [[]]
-        keyboard_index = 0
-        for gym_info in all_boulder_places['boulderGyms']:
-            if gym_info['category'] == 'North':
-                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
-            keyboard_index = keyboard_index + 1
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.sendMessage(chat_id=chat_id,
-                        text="Here are the bouldering gyms located at the North\n/places to find other gyms",
-                        reply_markup=reply_markup)
-
-    elif text == "🌊 South":
-        keyboard = [[]]
-        keyboard_index = 0
-        for gym_info in all_boulder_places['boulderGyms']:
-            if gym_info['category'] == 'South':
-                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
-            keyboard_index = keyboard_index + 1
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.sendMessage(chat_id=chat_id,
-                        text="Here are the bouldering gyms located at the South\n/places to find other gyms",
-                        reply_markup=reply_markup)
-
-    elif text == "🎋 East":
-        keyboard = [[]]
-        keyboard_index = 0
-        for gym_info in all_boulder_places['boulderGyms']:
-            if gym_info['category'] == 'East':
-                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
-            keyboard_index = keyboard_index + 1
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.sendMessage(chat_id=chat_id,
-                        text="Here are the bouldering gyms located at the East\n/places to find other gyms",
-                        reply_markup=reply_markup)
-
-    elif text == "🎐 West":
-        keyboard = [[]]
-        keyboard_index = 0
-        for gym_info in all_boulder_places['boulderGyms']:
-            if gym_info['category'] == 'West':
-                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
-            keyboard_index = keyboard_index + 1
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.sendMessage(chat_id=chat_id,
-                        text="Here are the bouldering gyms located at the West\n/places to find other gyms",
-                        reply_markup=reply_markup)
-
-    elif text == "⛰ Central":
-        keyboard = [[]]
-        keyboard_index = 0
-        for gym_info in all_boulder_places['boulderGyms']:
-            if gym_info['category'] == 'Central':
-                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
-            keyboard_index = keyboard_index + 1
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        bot.sendMessage(chat_id=chat_id,
-                        text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
-                        reply_markup=reply_markup)
-    # -----------------------------------------------------------------------------------------------------------------
-
-    elif text == "/nearby":
-        can_send_location = True
-        keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-
-        bot.sendMessage(chat_id=chat_id,
-                        text="Please enable location privacy for Telegram to provide your current location",
-                        reply_markup=reply_markup)
-
-    else:
-        # for loop to find such a gym
-        has_gym = False
-        for gym_info in all_boulder_places['boulderGyms']:
-            if text.lower() == gym_info['name'].lower():
-                has_gym = True
-                caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
-                            + gym_info['booking'] + "\nMore details: " + gym_info['url']
-                bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'), caption=caption)
-                break
-
-        # no such command, error message
-        if not has_gym:
-            bot.sendMessage(chat_id=chat_id, text=error_message)
-
+    # text = update.message.text.encode('utf-8').decode()
+    #
+    # # for debugging purposes only
+    # print("got text message: ", text)
+    #
+    # global isFeedback
+    #
+    # if isFeedback:
+    #     isFeedback = False
+    #     feedback = "Feedback: " + text
+    #     bot.sendMessage(chat_id=my_chat_id, text=feedback)
+    #     bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+    #
+    # elif text == "/feedback":
+    #     isFeedback = True
+    #     bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
+    #
+    # elif text == "/start":
+    #     bot.sendMessage(chat_id=chat_id, text=welcome_message)
+    #
+    # elif text == "/help":
+    #     bot.sendMessage(chat_id=chat_id, text=help_message)
+    #
+    # elif text == "/places":
+    #     keyboard = [[telegram.KeyboardButton('🔥 North')],
+    #                 [telegram.KeyboardButton('🌊 South')],
+    #                 [telegram.KeyboardButton('🎋 East')],
+    #                 [telegram.KeyboardButton('🎐 West')],
+    #                 [telegram.KeyboardButton('⛰ Central')]]
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #
+    #     bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗",
+    #                     reply_markup=reply_markup)
+    #     # activate choice
+    #
+    # # if north, south, east, west or central, then send the whole list of bouldering gyms -------------------------
+    # elif text == "🔥 North":
+    #     keyboard = [[]]
+    #     keyboard_index = 0
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if gym_info['category'] == 'North':
+    #             keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+    #         keyboard_index = keyboard_index + 1
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Here are the bouldering gyms located at the North\n/places to find other gyms",
+    #                     reply_markup=reply_markup)
+    #
+    # elif text == "🌊 South":
+    #     keyboard = [[]]
+    #     keyboard_index = 0
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if gym_info['category'] == 'South':
+    #             keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+    #         keyboard_index = keyboard_index + 1
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Here are the bouldering gyms located at the South\n/places to find other gyms",
+    #                     reply_markup=reply_markup)
+    #
+    # elif text == "🎋 East":
+    #     keyboard = [[]]
+    #     keyboard_index = 0
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if gym_info['category'] == 'East':
+    #             keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+    #         keyboard_index = keyboard_index + 1
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Here are the bouldering gyms located at the East\n/places to find other gyms",
+    #                     reply_markup=reply_markup)
+    #
+    # elif text == "🎐 West":
+    #     keyboard = [[]]
+    #     keyboard_index = 0
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if gym_info['category'] == 'West':
+    #             keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+    #         keyboard_index = keyboard_index + 1
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Here are the bouldering gyms located at the West\n/places to find other gyms",
+    #                     reply_markup=reply_markup)
+    #
+    # elif text == "⛰ Central":
+    #     keyboard = [[]]
+    #     keyboard_index = 0
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if gym_info['category'] == 'Central':
+    #             keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+    #         keyboard_index = keyboard_index + 1
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
+    #                     reply_markup=reply_markup)
+    # # -----------------------------------------------------------------------------------------------------------------
+    #
+    # elif text == "/nearby":
+    #     can_send_location = True
+    #     keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+    #
+    #     bot.sendMessage(chat_id=chat_id,
+    #                     text="Please enable location privacy for Telegram to provide your current location",
+    #                     reply_markup=reply_markup)
+    #
+    # else:
+    #     # for loop to find such a gym
+    #     has_gym = False
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         if text.lower() == gym_info['name'].lower():
+    #             has_gym = True
+    #             caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
+    #                         + gym_info['booking'] + "\nMore details: " + gym_info['url']
+    #             bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'), caption=caption)
+    #             break
+    #
+    #     # no such command, error message
+    #     if not has_gym:
+    #         bot.sendMessage(chat_id=chat_id, text=error_message)
+    #
     return 'ok'
+
 
 
 # To check if heroku server is still hosting
