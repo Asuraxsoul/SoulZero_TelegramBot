@@ -44,6 +44,10 @@ def respond():
     print("update: ", update)
     print("update2: ", update.message)
 
+    if update.message is None:
+        location = update.edited_message
+        print("my location: ", location)
+
     chat_id = update.message.chat.id
 
     # Telegram understands UTF-8, so encode text for unicode compatibility
@@ -81,7 +85,7 @@ def respond():
         # activate choice
 
     # if north, south, east, west or central, then send the whole list of bouldering gyms -----------------------------
-    elif text == "North":
+    elif text == "🔥 North":
         keyboard = [[]]
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
@@ -94,7 +98,7 @@ def respond():
                         text="Here are the bouldering gyms located at the North\n/places to find other gyms",
                         reply_markup=reply_markup)
 
-    elif text == "South":
+    elif text == "🌊 South":
         keyboard = [[]]
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
@@ -107,7 +111,7 @@ def respond():
                         text="Here are the bouldering gyms located at the South\n/places to find other gyms",
                         reply_markup=reply_markup)
 
-    elif text == "East":
+    elif text == "🎋 East":
         keyboard = [[]]
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
@@ -120,7 +124,7 @@ def respond():
                         text="Here are the bouldering gyms located at the East\n/places to find other gyms",
                         reply_markup=reply_markup)
 
-    elif text == "West":
+    elif text == "🎐 West":
         keyboard = [[]]
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
@@ -133,7 +137,7 @@ def respond():
                         text="Here are the bouldering gyms located at the West\n/places to find other gyms",
                         reply_markup=reply_markup)
 
-    elif text == "Central":
+    elif text == "⛰ Central":
         keyboard = [[]]
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
