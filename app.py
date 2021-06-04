@@ -70,14 +70,14 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text=help_message)
 
     elif text == "/places":
-        keyboard = [[telegram.KeyboardButton('North')],
-                    [telegram.KeyboardButton('South')],
-                    [telegram.KeyboardButton('East')],
-                    [telegram.KeyboardButton('West')],
-                    [telegram.KeyboardButton('Central')]]
+        keyboard = [[telegram.KeyboardButton('🔥 North')],
+                    [telegram.KeyboardButton('🌊 South')],
+                    [telegram.KeyboardButton('🎋 East')],
+                    [telegram.KeyboardButton('🎐 West')],
+                    [telegram.KeyboardButton('⛰ Central')]]
         reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
-        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
+        bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗", reply_markup=reply_markup)
         # activate choice
 
     # if north, south, east, west or central, then send the whole list of bouldering gyms -----------------------------
