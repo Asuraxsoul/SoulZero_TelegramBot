@@ -48,8 +48,8 @@ def respond():
         longitude = location.longitude
 
         # TODO: insert some python API to find nearby gyms
-        bot.sendMessage(chat_id=chat_id, text="You are at " + "latitude: " + latitude + ", longitude: " + longitude +
-                        " now, the nearest gyms (within 3km, if any) are shown below.")
+        bot.sendMessage(chat_id=chat_id, text="You are at " + "latitude: " + str(latitude) + ", longitude: "
+                        + str(longitude) + " now, the nearest gyms (within 3km, if any) are shown below.")
 
     else:
         # Telegram understands UTF-8, so encode text for unicode compatibility
@@ -83,7 +83,8 @@ def respond():
                         [telegram.KeyboardButton('⛰ Central')]]
             reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
-            bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗", reply_markup=reply_markup)
+            bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗",
+                            reply_markup=reply_markup)
             # activate choice
 
         # if north, south, east, west or central, then send the whole list of bouldering gyms -------------------------
