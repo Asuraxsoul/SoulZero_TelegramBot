@@ -45,7 +45,7 @@ def respond():
     print("update2: ", update.message)
 
     if update.message is None:
-        location = update.edited_message
+        location = update.location
         print("my location: ", location)
 
     chat_id = update.message.chat.id
