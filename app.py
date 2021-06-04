@@ -1,7 +1,7 @@
 import json
 from flask import Flask, request
 import telegram
-from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id, google_places_api_key
+from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
 from database.boulder_places import boulder_gyms
 
 global bot
