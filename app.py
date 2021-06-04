@@ -55,6 +55,8 @@ def respond():
         bot.sendMessage(chat_id=chat_id, text="You are at " + "latitude: " + str(latitude) + ", longitude: "
                         + str(longitude) + " now, the nearest gyms (within 3km, if any) are shown below.")
 
+        return 'ok'
+
     else:
         # Telegram understands UTF-8, so encode text for unicode compatibility
         if update.message.text is None:
