@@ -45,7 +45,7 @@ def respond():
     global can_send_location
 
     location = update.message.location
-    if update.message.location is not None and can_send_location:
+    if update.message.location is not None:
         can_send_location = False
         print("my location: ", location)
         latitude = location.latitude
@@ -56,9 +56,8 @@ def respond():
                         + str(longitude) + " now, the nearest gyms (within 3km, if any) are shown below.")
 
     else:
-    # Telegram understands UTF-8, so encode text for unicode compatibility
-
-        if update.message.text == None:
+        # Telegram understands UTF-8, so encode text for unicode compatibility
+        if update.message.text is None:
             return 'not ok'
 
         else:
@@ -97,7 +96,7 @@ def respond():
                                 reply_markup=reply_markup)
                 # activate choice
 
-            # if north, south, east, west or central, then send the whole list of bouldering gyms -------------------------
+            # if north, south, east, west or central, then send the whole list of bouldering gyms ---------------------
             elif text == "🔥 North":
                 keyboard = [[]]
                 keyboard_index = 0
@@ -162,7 +161,7 @@ def respond():
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
                                 reply_markup=reply_markup)
-            # -----------------------------------------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------------------------------
 
             elif text == "/nearby":
                 can_send_location = True
