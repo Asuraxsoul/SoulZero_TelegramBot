@@ -58,7 +58,11 @@ def respond():
 
     else:
         # Telegram understands UTF-8, so encode text for unicode compatibility
-        text = update.message.text.encode('utf-8').decode()
+        try:
+            text = update.message.text.encode('utf-8').decode()
+        except Exception:
+            bot.sendMessage(chat_id=chat_id, text=error_message)
+
         # for debugging purposes only
         print("got text message: ", text)
 
