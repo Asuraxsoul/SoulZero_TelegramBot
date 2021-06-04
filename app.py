@@ -23,7 +23,7 @@ GPLACES_API_KEY = google_places_api_key
 isFeedback = False
 
 help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
-/nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
+/nearby to enquire Singapore bouldering gyms near me (if any, within 10km radius),
 /gym_name to enquire more details about the gym,
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
@@ -39,6 +39,9 @@ app = Flask(__name__)
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
+
+    print("update: ", update)
+    print("update2: ", update.message)
 
     chat_id = update.message.chat.id
 
@@ -143,7 +146,7 @@ def respond():
                         reply_markup=reply_markup)
     # -----------------------------------------------------------------------------------------------------------------
 
-    elif text == "/nearme":
+    elif text == "/nearby":
         keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
         reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 

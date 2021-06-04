@@ -7,7 +7,7 @@
 > 1. Notify north, south, east, west and central options
 > 2. Gives user a list of bouldering gyms
 
-### /nearme:
+### /nearby:
 > 1. Picks up user current location
 > 2. Gives user a list of nearby gyms (10km radius)
 
