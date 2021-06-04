@@ -18,6 +18,8 @@ MY_CHAT_ID = my_chat_id
 all_boulder_places = json.loads(boulder_gyms)
 GPLACES_API_KEY = google_places_api_key
 
+#
+
 isFeedback = False
 
 help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
@@ -39,7 +41,6 @@ def respond():
     update = telegram.Update.de_json(request.get_json(force=True), bot)
 
     chat_id = update.message.chat.id
-    msg_id = update.message.message_id
 
     # Telegram understands UTF-8, so encode text for unicode compatibility
     text = update.message.text.encode('utf-8').decode()
@@ -70,7 +71,7 @@ def respond():
                     [telegram.KeyboardButton('East')],
                     [telegram.KeyboardButton('West')],
                     [telegram.KeyboardButton('Central')]]
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
         bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at?", reply_markup=reply_markup)
         # activate choice
@@ -84,7 +85,7 @@ def respond():
                 keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.sendMessage(chat_id=chat_id,
                         text="Here are the bouldering gyms located at the North\n/places to find other gyms",
                         reply_markup=reply_markup)
@@ -97,7 +98,7 @@ def respond():
                 keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.sendMessage(chat_id=chat_id,
                         text="Here are the bouldering gyms located at the South\n/places to find other gyms",
                         reply_markup=reply_markup)
@@ -110,7 +111,7 @@ def respond():
                 keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.sendMessage(chat_id=chat_id,
                         text="Here are the bouldering gyms located at the East\n/places to find other gyms",
                         reply_markup=reply_markup)
@@ -123,7 +124,7 @@ def respond():
                 keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.sendMessage(chat_id=chat_id,
                         text="Here are the bouldering gyms located at the West\n/places to find other gyms",
                         reply_markup=reply_markup)
@@ -136,13 +137,18 @@ def respond():
                 keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         bot.sendMessage(chat_id=chat_id,
                         text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
                         reply_markup=reply_markup)
     # -----------------------------------------------------------------------------------------------------------------
 
     elif text == "/nearme":
+        keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
+        bot.sendMessage(chat_id=chat_id, text="Send current location", reply_markup=reply_markup)
+
         bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are shown "
                                               "below.")
 
