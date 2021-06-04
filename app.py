@@ -9,12 +9,14 @@ global TOKEN
 global BOTNAME
 global MY_CHAT_ID
 global all_boulder_places
+
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
 all_boulder_places = json.loads(boulder_gyms)
 
+can_send_location = False
 isFeedback = False
 
 help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
@@ -41,8 +43,11 @@ def respond():
 
     chat_id = update.message.chat.id
 
+    global can_send_location
+
     location = update.message.location
-    if update.message.location is not None:
+    if update.message.location is not None and can_send_location:
+        can_send_location = False
         print("my location: ", location)
         latitude = location.latitude
         longitude = location.longitude
@@ -155,6 +160,7 @@ def respond():
         # -----------------------------------------------------------------------------------------------------------------
 
         elif text == "/nearby":
+            can_send_location = True
             keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
             reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
