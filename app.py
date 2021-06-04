@@ -74,16 +74,16 @@ def respond():
         # if north, south, east, west, central
         # then send the whole list of bouldering gyms
 
-    elif text == "North":
-        keyboard = []
-
-        all_boulder_places = json.loads(boulder_places)
-        for gym_info in all_boulder_places['boulderGyms']:
-            keyboard.append(telegram.KeyboardButton(text=gym_info['name']))
-
-        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
-        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
-                        reply_markup=reply_markup)
+    # elif text == "North":
+    #     keyboard = []
+    #
+    #     all_boulder_places = json.loads(boulder_places)
+    #     for gym_info in all_boulder_places['boulderGyms']:
+    #         keyboard.append(telegram.KeyboardButton(text=gym_info['name']))
+    #
+    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+    #     bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
+    #                     reply_markup=reply_markup)
 
     elif text == "South":
         bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the South")
