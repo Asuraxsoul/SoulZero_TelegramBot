@@ -19,12 +19,12 @@ all_boulder_places = json.loads(boulder_gyms)
 can_send_location = False
 isFeedback = False
 
-help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
-/nearby to enquire Singapore bouldering gyms near me (if any, within 10km radius),
-/gym_name to enquire more details about the gym,
-/feedback to feedback inaccurate information provided or improvements to the bot,
-/help to enquire on available commands."""
-welcome_message = "Welcome to Boulder_SG @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
+help_message = """🗺 /places to enquire Singapore's bouldering gyms categorized by locations,
+🧭 /nearby to enquire Singapore bouldering gyms near me (if any, within 10km radius),
+🤸 /gym_name to enquire more details about the gym,
+📝 /feedback to feedback inaccurate information provided or improvements to the bot,
+ℹ /help to enquire on available commands."""
+welcome_message = "Welcome to Boulder_SG 🧗 @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
                                                         "Singapore!\n\n" + help_message
 error_message = """Bot does not understand your input, please try typing /help to view commands"""
 
@@ -45,15 +45,15 @@ def respond():
     global can_send_location
 
     location = update.message.location
-    if update.message.location is not None:
+    if location is not None:
         can_send_location = False
         print("my location: ", location)
         latitude = location.latitude
         longitude = location.longitude
 
         # TODO: insert some python API to find nearby gyms
-        bot.sendMessage(chat_id=chat_id, text="You are at " + "latitude: " + str(latitude) + ", longitude: "
-                        + str(longitude) + " now, the nearest gyms (within 3km, if any) are shown below.")
+        bot.sendMessage(chat_id=chat_id, text="You are currently at " + "latitude: " + str(latitude) + ", longitude: "
+                        + str(longitude) + ".\nThe nearest gyms (within 3km, if any) are shown below.")
 
         return 'ok'
 
@@ -68,17 +68,19 @@ def respond():
             # for debugging purposes only
             print("got text message: ", text)
 
+# feedback function ---------------------------------------------------------------------------------------------------
             global isFeedback
 
             if isFeedback:
                 isFeedback = False
                 feedback = "Feedback: " + text
                 bot.sendMessage(chat_id=my_chat_id, text=feedback)
-                bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded!")
+                bot.sendMessage(chat_id=chat_id, text="Thank you, your feedback has been recorded! 📝")
 
             elif text == "/feedback":
                 isFeedback = True
                 bot.sendMessage(chat_id=chat_id, text="Please type in your feedback")
+# ---------------------------------------------------------------------------------------------------------------------
 
             elif text == "/start":
                 bot.sendMessage(chat_id=chat_id, text=welcome_message)
@@ -94,11 +96,11 @@ def respond():
                             [telegram.KeyboardButton('⛰ Central')]]
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
-                bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🧗",
+                bot.sendMessage(chat_id=chat_id, text="Which part of Singapore are you looking at? 🌏",
                                 reply_markup=reply_markup)
                 # activate choice
 
-            # if north, south, east, west or central, then send the whole list of bouldering gyms ---------------------
+# send the whole list of bouldering gyms based on north south east west central areas ---------------------------------
             elif text == "🔥 North":
                 keyboard = [[]]
                 keyboard_index = 0
@@ -163,7 +165,7 @@ def respond():
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
                                 reply_markup=reply_markup)
-            # ---------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------
 
             elif text == "/nearby":
                 can_send_location = True
@@ -171,7 +173,7 @@ def respond():
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
                 bot.sendMessage(chat_id=chat_id,
-                                text="Please enable location privacy for Telegram to provide your current location",
+                                text="Please enable location privacy for Telegram and provide your current location",
                                 reply_markup=reply_markup)
 
             else:
@@ -190,6 +192,7 @@ def respond():
                     bot.sendMessage(chat_id=chat_id, text=error_message)
 
             return 'ok'
+
 
 # To check if heroku server is still hosting
 @app.route('/setwebhook', methods=['GET', 'POST'])
