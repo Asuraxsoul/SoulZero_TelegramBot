@@ -40,6 +40,7 @@ def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
 
+    print("update0: ", telegram.Update)
     print("update: ", update)
     print("update2: ", update.message)
 
