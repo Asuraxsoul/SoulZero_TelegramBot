@@ -18,7 +18,7 @@ MY_CHAT_ID = my_chat_id
 all_boulder_places = json.loads(boulder_gyms)
 GPLACES_API_KEY = google_places_api_key
 
-#
+google_places = GooglePlaces(GPLACES_API_KEY)
 
 isFeedback = False
 
@@ -44,11 +44,26 @@ def respond():
     print("update: ", update)
     print("update2: ", update.message)
 
-    if update.message is None:
-        location = update.location
-        print("my location: ", location)
-
     chat_id = update.message.chat.id
+
+    location = update.message.location
+    if update.message.location is not None:
+        print("my location: ", location)
+        latitude = location.latitude
+        longitude = location.longitude
+        query_result = google_places.nearby_search(
+            lat_lng={'lat': latitude, 'lng': longitude},
+            radius=5000,
+            # types =[types.TYPE_HOSPITAL] or
+            # [types.TYPE_CAFE] or [type.TYPE_BAR]
+            # or [type.TYPE_CASINO])
+            types=[types.TYPE_GYM])
+
+        b_gyms = []
+        for gyms in query_result.places:
+            b_gyms.insert(gyms.name)
+
+        bot.sendMessage(chat_id=chat_id, text=b_gyms)
 
     # Telegram understands UTF-8, so encode text for unicode compatibility
     text = update.message.text.encode('utf-8').decode()
