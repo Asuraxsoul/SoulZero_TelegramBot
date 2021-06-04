@@ -1,21 +1,24 @@
-import re
 import json
 from flask import Flask, request
 import telegram
-from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
+from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id, google_places_api_key
 from database.boulder_places import boulder_gyms
+from googleplaces import GooglePlaces, types, lang
 
 global bot
 global TOKEN
 global BOTNAME
 global MY_CHAT_ID
+global all_boulder_places
+global GPLACES_API_KEY
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
-isFeedback = False
-global all_boulder_places
 all_boulder_places = json.loads(boulder_gyms)
+GPLACES_API_KEY = google_places_api_key
+
+isFeedback = False
 
 help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
 /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
@@ -34,8 +37,6 @@ app = Flask(__name__)
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-    # print("update message: ", update)
-    # print("update message2: ", update.message)
 
     chat_id = update.message.chat.id
     msg_id = update.message.message_id
@@ -159,20 +160,6 @@ def respond():
         # no such command, error message
         if not has_gym:
             bot.sendMessage(chat_id=chat_id, text=error_message)
-
-        # try:
-        #     # clear the message we got from any non alphabets
-        #     text = re.sub(r"\W", "_", text)
-        #     # create the api link for the avatar based on http://avatars.adorable.io/
-        #     url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
-        #     # reply with a photo to the name the user sent,
-        #     # note that you can send photos by url and telegram will fetch it for you
-        #     bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
-        # except Exception:
-        #     # if things went wrong
-        #     bot.sendMessage(chat_id=chat_id,
-        #                     text="There was a problem in the name you used, please enter different name",
-        #                     reply_to_message_id=msg_id)
 
     return 'ok'
 

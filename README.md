@@ -1,22 +1,30 @@
-# Telegram Bot - SoulZero
-### Singapore bouldering gym finder
-### Telegram bot username: @SoulZero_bot
+# **Telegram Bot** - Boulder_SG
+## ~Singapore bouldering gym finder~
+### Telegram bot username: _@SoulZero_bot_
 
-## Ideas
+## Bot Functions
 ### /places: 
-#### 1. notify north south east west central option
-#### 2. give user a list of bouldering gyms
+> 1. Notify north, south, east, west and central options
+> 2. Gives user a list of bouldering gyms
 
 ### /nearme:
-#### 1. picks up user current location
-#### 2. give user a list of nearby gyms (10km radius)
+> 1. Picks up user current location
+> 2. Gives user a list of nearby gyms (10km radius)
+
+### /gym_name:
+> 1. Gives detail about the gym
 
 ### /feedback:
-#### 1. emails me a query / improvement
+> 1. Sends me a query / improvement about the bot
 
 ### /help:
-#### 1. displays all commands
+> 1. Displays all commands
 
 ## Idea Extensions
-### 1. Opening and closing times (put the timing w picture)
-### 2. Typing /gym_name will give details about the gym
+1. Opening and closing times (put the timing w picture)
+
+### Python Libraries
+1. json
+2. flask
+3. request
+4. telegram-bot-api

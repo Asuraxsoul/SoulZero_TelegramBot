@@ -1,9 +1,7 @@
-import json
-
 boulder_gyms = '''
 {
     "boulderGyms": [
-        {
+        { 
         "name": "Z-Vertigo",
         "image": "./database/photos/zVertigoImage.jpg",
         "location": "170 Upper Bukit Timah Rd, #B2-20B, Singapore 588179",
@@ -24,5 +22,3 @@ boulder_gyms = '''
     ]
 }
 '''
-
-print("ASD".lower() == "asd".lower())
