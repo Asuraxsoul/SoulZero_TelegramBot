@@ -153,7 +153,7 @@ def respond():
                 has_gym = True
                 # caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
                 #             + gym_info['booking'] + "\nMore details: " + gym_info['url']
-                bot.sendPhoto(chat_id=chat_id, photo=gym_info['image'])
+                bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'))
                 break
 
         # no such command, error message
