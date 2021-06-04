@@ -1,7 +1,9 @@
 import re
+import json
 from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
+from assets.boulder_places import boulder_places
 
 global bot
 global TOKEN
@@ -59,7 +61,7 @@ def respond():
     elif text == "/help":
         bot.sendMessage(chat_id=chat_id, text=help_message)
 
-    elif text == "/places":
+    elif text == "/place":
         keyboard = [[telegram.KeyboardButton('North')],
                     [telegram.KeyboardButton('South')],
                     [telegram.KeyboardButton('East')],
@@ -73,10 +75,30 @@ def respond():
         # then send the whole list of bouldering gyms
 
     elif text == "North":
-        bot.sendMessage(chat_id=chat_id, text="Which part of ?")
+        reply_markup = telegram.ReplyKeyboardMarkup()
+
+        all_boulder_places = json.loads(boulder_places)
+        for gym_info in all_boulder_places['boulderGyms']:
+            reply_markup.add(telegram.KeyboardButton(text=gym_info['name']))
+
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
+                        reply_markup=reply_markup)
+
+    elif text == "South":
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the South")
+
+    elif text == "East":
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the East")
+
+    elif text == "West":
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the West")
+
+    elif text == "Central":
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the Central")
 
     elif text == "/nearme":
-        bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are xxx.")
+        bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are shown "
+                                              "below.")
 
     else:
         # for loop to find such a gym
