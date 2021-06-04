@@ -3,7 +3,7 @@ import json
 from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
-from assets.boulder_places import boulder_places
+from assets.boulder_places import boulder_gyms
 
 global bot
 global TOKEN
@@ -74,16 +74,15 @@ def respond():
         # if north, south, east, west, central
         # then send the whole list of bouldering gyms
 
-    # elif text == "North":
-    #     keyboard = []
-    #
-    #     all_boulder_places = json.loads(boulder_places)
-    #     for gym_info in all_boulder_places['boulderGyms']:
-    #         keyboard.append(telegram.KeyboardButton(text=gym_info['name']))
-    #
-    #     reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
-    #     bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
-    #                     reply_markup=reply_markup)
+    elif text == "North":
+        keyboard = []
+        all_boulder_places = json.loads(boulder_gyms)
+        for gym_info in all_boulder_places['boulderGyms']:
+            keyboard.append(telegram.KeyboardButton(text=gym_info['name']))
+
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
+                        reply_markup=reply_markup)
 
     elif text == "South":
         bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the South")

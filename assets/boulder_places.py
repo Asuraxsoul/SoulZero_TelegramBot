@@ -1,6 +1,6 @@
 import json
 
-boulder_places = '''
+boulder_gyms = '''
 {
     "boulderGyms": [
         {
@@ -25,8 +25,8 @@ boulder_places = '''
 }
 '''
 
-# all_boulder_places = json.loads(boulder_places)
+# all_boulder_places = json.loads(boulder_gyms)
 # print(all_boulder_places)
 #
 # for gym_info in all_boulder_places['boulderGyms']:
-#     print(gym_info['category'])
+#     print(type(gym_info['category']))
