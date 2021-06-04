@@ -75,12 +75,13 @@ def respond():
         # then send the whole list of bouldering gyms
 
     elif text == "North":
-        reply_markup = telegram.ReplyKeyboardMarkup()
+        keyboard = []
 
         all_boulder_places = json.loads(boulder_places)
         for gym_info in all_boulder_places['boulderGyms']:
-            reply_markup.add(telegram.KeyboardButton(text=gym_info['name']))
+            keyboard.add(telegram.KeyboardButton(text=gym_info['name']))
 
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
         bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the North",
                         reply_markup=reply_markup)
 
