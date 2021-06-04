@@ -14,14 +14,15 @@ bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
 isFeedback = False
+all_boulder_places = json.loads(boulder_gyms)
 
-help_message = """/place to enquire Singapore's bouldering gyms categorized by locations,
+help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
 /nearme to enquire Singapore bouldering gyms near me (if any, within 10km radius),
 /gym_name to enquire more details about the gym,
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
 welcome_message = "Welcome to Boulder_SG @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
-                  "Singapore!\n" + help_message
+                  "Singapore!\n\n" + help_message
 error_message = """Bot does not understand your input, please try typing /help for help"""
 
 # start the flask app
@@ -32,8 +33,8 @@ app = Flask(__name__)
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-    print("update message: ", update)
-    print("update message2: ", update.message)
+    # print("update message: ", update)
+    # print("update message2: ", update.message)
 
     chat_id = update.message.chat.id
     msg_id = update.message.message_id
@@ -61,7 +62,7 @@ def respond():
     elif text == "/help":
         bot.sendMessage(chat_id=chat_id, text=help_message)
 
-    elif text == "/place":
+    elif text == "/places":
         keyboard = [[telegram.KeyboardButton('North')],
                     [telegram.KeyboardButton('South')],
                     [telegram.KeyboardButton('East')],
@@ -76,10 +77,11 @@ def respond():
 
     elif text == "North":
         keyboard = [[]]
-        all_boulder_places = json.loads(boulder_gyms)
+        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
-            keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+            if gym_info['category'] == 'North':
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
         reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
@@ -87,16 +89,56 @@ def respond():
                         reply_markup=reply_markup)
 
     elif text == "South":
-        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the South")
+        keyboard = [[]]
+        all_boulder_places = json.loads(boulder_gyms)
+        keyboard_index = 0
+        for gym_info in all_boulder_places['boulderGyms']:
+            if gym_info['category'] == 'South':
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+            keyboard_index = keyboard_index + 1
+
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the South",
+                        reply_markup=reply_markup)
 
     elif text == "East":
-        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the East")
+        keyboard = [[]]
+        all_boulder_places = json.loads(boulder_gyms)
+        keyboard_index = 0
+        for gym_info in all_boulder_places['boulderGyms']:
+            if gym_info['category'] == 'East':
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+            keyboard_index = keyboard_index + 1
+
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the East",
+                        reply_markup=reply_markup)
 
     elif text == "West":
-        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the West")
+        keyboard = [[]]
+        all_boulder_places = json.loads(boulder_gyms)
+        keyboard_index = 0
+        for gym_info in all_boulder_places['boulderGyms']:
+            if gym_info['category'] == 'West':
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+            keyboard_index = keyboard_index + 1
+
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the West",
+                        reply_markup=reply_markup)
 
     elif text == "Central":
-        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the Central")
+        keyboard = [[]]
+        all_boulder_places = json.loads(boulder_gyms)
+        keyboard_index = 0
+        for gym_info in all_boulder_places['boulderGyms']:
+            if gym_info['category'] == 'Central':
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+            keyboard_index = keyboard_index + 1
+
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+        bot.sendMessage(chat_id=chat_id, text="Here are the bouldering gyms located at the Central",
+                        reply_markup=reply_markup)
 
     elif text == "/nearme":
         bot.sendMessage(chat_id=chat_id, text="You are at xxx now, the nearest gyms (within 10km, if any) are shown "
