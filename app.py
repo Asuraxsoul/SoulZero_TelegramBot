@@ -149,7 +149,7 @@ def respond():
         # for loop to find such a gym
         has_gym = False
         for gym_info in all_boulder_places['boulderGyms']:
-            if text == gym_info['name']:
+            if text.lower() == gym_info['name'].lower():
                 has_gym = True
                 caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
                             + gym_info['booking'] + "\nMore details: " + gym_info['url']

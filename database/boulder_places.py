@@ -25,8 +25,4 @@ boulder_gyms = '''
 }
 '''
 
-# all_boulder_places = json.loads(boulder_gyms)
-# print(all_boulder_places)
-#
-# for gym_info in all_boulder_places['boulderGyms']:
-#     print(type(gym_info['category']))
+print("ASD".lower() == "asd".lower())
