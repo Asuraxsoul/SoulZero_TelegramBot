@@ -14,6 +14,7 @@ bot = telegram.Bot(token=TOKEN)
 BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
 isFeedback = False
+global all_boulder_places
 all_boulder_places = json.loads(boulder_gyms)
 
 help_message = """/places to enquire Singapore's bouldering gyms categorized by locations,
@@ -22,7 +23,7 @@ help_message = """/places to enquire Singapore's bouldering gyms categorized by 
 /feedback to feedback inaccurate information provided or improvements to the bot,
 /help to enquire on available commands."""
 welcome_message = "Welcome to Boulder_SG @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
-                  "Singapore!\n\n" + help_message
+                                                        "Singapore!\n\n" + help_message
 error_message = """Bot does not understand your input, please try typing /help to view commands"""
 
 # start the flask app
@@ -76,7 +77,6 @@ def respond():
     # if north, south, east, west or central, then send the whole list of bouldering gyms -----------------------------
     elif text == "North":
         keyboard = [[]]
-        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
             if gym_info['category'] == 'North':
@@ -90,7 +90,6 @@ def respond():
 
     elif text == "South":
         keyboard = [[]]
-        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
             if gym_info['category'] == 'South':
@@ -104,7 +103,6 @@ def respond():
 
     elif text == "East":
         keyboard = [[]]
-        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
             if gym_info['category'] == 'East':
@@ -118,7 +116,6 @@ def respond():
 
     elif text == "West":
         keyboard = [[]]
-        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
             if gym_info['category'] == 'West':
@@ -132,7 +129,6 @@ def respond():
 
     elif text == "Central":
         keyboard = [[]]
-        global all_boulder_places
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
             if gym_info['category'] == 'Central':
@@ -151,13 +147,12 @@ def respond():
 
     else:
         # for loop to find such a gym
-        global all_boulder_places
         has_gym = False
         for gym_info in all_boulder_places['boulderGyms']:
             if text == gym_info['name']:
                 has_gym = True
                 caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
-                          + gym_info['booking'] + "\nMore details: " + gym_info['url']
+                            + gym_info['booking'] + "\nMore details: " + gym_info['url']
                 bot.sendPhoto(chat_id=chat_id, photo=gym_info['image'], caption=caption)
 
         # no such command, error message
