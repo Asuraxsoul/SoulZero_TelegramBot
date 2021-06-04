@@ -79,7 +79,7 @@ def respond():
         all_boulder_places = json.loads(boulder_gyms)
         keyboard_index = 0
         for gym_info in all_boulder_places['boulderGyms']:
-            keyboard.insert(keyboard_index, telegram.KeyboardButton(gym_info['name']))
+            keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
             keyboard_index = keyboard_index + 1
 
         reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
