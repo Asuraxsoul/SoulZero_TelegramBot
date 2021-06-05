@@ -20,8 +20,9 @@ all_boulder_places = json.loads(boulder_gyms)
 isFeedback = False
 
 help_message = """🗺 /places to enquire Singapore's bouldering gyms categorized by locations,
-🧭 /nearby to enquire Singapore bouldering gyms near me (if any, within 10km radius),
-🤸 /gym_name to enquire more details about the gym,
+🧭 /nearby to enquire Singapore bouldering gyms near me (if any, within 5km radius),
+🤸 /all to see all available bouldering gyms in Singapore,
+🎯 gym_name to enquire more details about the gym,
 📝 /feedback to feedback inaccurate information provided or improvements to the bot,
 ℹ /help to enquire on available commands."""
 welcome_message = "Welcome to Boulder_SG 🧗 @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
@@ -101,6 +102,18 @@ def respond():
 
             elif text == "/help":
                 bot.sendMessage(chat_id=chat_id, text=help_message)
+
+            elif text == "/all":
+                keyboard = [[]]
+                keyboard_index = 0
+                for gym_info in all_boulder_places['boulderGyms']:
+                    keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+                    keyboard_index = keyboard_index + 1
+                reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
+                bot.sendMessage(chat_id=chat_id,
+                                text="Here are all the available bouldering gyms in Singapore",
+                                reply_markup=reply_markup)
 
             elif text == "/places":
                 keyboard = [[telegram.KeyboardButton('🔥 North')],

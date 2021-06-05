@@ -11,7 +11,10 @@
 > 1. Picks up user current location
 > 2. Gives user a list of nearby gyms (5km radius)
 
-### /gym_name:
+### /all:
+> 1. Gives user the full list of gyms in Singapore
+
+### gym_name:
 > 1. Gives detail about the gym
 
 ### /feedback:
