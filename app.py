@@ -109,7 +109,7 @@ def respond():
                 for gym_info in all_boulder_places['boulderGyms']:
                     keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-                reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+                reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
 
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are all the available bouldering gyms in Singapore",
