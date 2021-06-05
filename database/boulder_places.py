@@ -49,7 +49,7 @@ boulder_gyms = '''
         "lng": 103.79434329774709,
         "category": "West",
         "url": "https://www.lighthouseclimbing.com/",
-        "booking": "Lighthouse Climbing app 📲 iOS: https://apps.apple.com/dm/app/lighthouse-climbing-gym/id1511580846 Google Playstore: https://play.google.com/store/apps/details?id=com.FitDegree.LighthouseClimbingGym&hl=en"
+        "booking": "Lighthouse app 📲       iOS: https://apps.apple.com/dm/app/lighthouse-climbing-gym/id1511580846             Google Playstore: https://play.google.com/store/apps/details?id=com.FitDegree.LighthouseClimbingGym&hl=en"
         },
         {
         "name": "FitBloc",
@@ -59,7 +59,7 @@ boulder_gyms = '''
         "lng": 103.79040556711915,
         "category": "West",
         "url": "https://fitbloc.com/",
-        "booking": "Fit·Bloc app 📲 iOS: https://apps.apple.com/us/app/fit-bloc/id1435631462 Google Playstore: https://play.google.com/store/apps/details?id=com.fitnessmobileapps.fitbloc&hl=en"
+        "booking": "Fit·Bloc app 📲         iOS: https://apps.apple.com/us/app/fit-bloc/id1435631462      Google Playstore: https://play.google.com/store/apps/details?id=com.fitnessmobileapps.fitbloc&hl=en"
         },
         {
         "name": "Ground Up Climbing",
@@ -164,6 +164,3 @@ boulder_gyms = '''
     ]
 }
 '''
-
-a = ("The Rock School".lower()).startswith("The rock".lower())
-print(a)
