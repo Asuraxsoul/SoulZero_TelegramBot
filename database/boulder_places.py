@@ -29,8 +29,7 @@ boulder_gyms = '''
         "lng": 103.86389578246171,
         "category": "Central",
         "url": "https://www.boulderplusclimbing.com/",
-        "booking": "https://app.rockgympro.com/b/widget/?a=calendar&&widget_guid=f33c8b7f0916487d9af58088967aa62d&random
-        =60bb33eb3a13c&iframeid=&mode=p"
+        "booking": "https://app.rockgympro.com/b/widget/?a=calendar&&widget_guid=f33c8b7f0916487d9af58088967aa62d&random=60bb33eb3a13c&iframeid=&mode=p"
         }
     ]
 }
