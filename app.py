@@ -68,7 +68,7 @@ def respond():
 
         bot.sendMessage(chat_id=chat_id,
                         text="You are currently at " + "latitude: " + str(latitude) + ", longitude: "
-                        + str(longitude) + ".\nThe nearest gyms (within 5km, if any) are shown below.",
+                        + str(longitude) + ".\nThe nearest gyms (within 5km) are shown below, if any.",
                         reply_markup=reply_markup)
 
         return 'ok'
@@ -114,7 +114,7 @@ def respond():
                                 reply_markup=reply_markup)
                 # activate choice
 
-# send the whole list of bouldering gyms based on north north-east east west central areas ---------------------------------
+# send the whole list of bouldering gyms based on north north-east east west central areas ----------------------------
             elif text == "🔥 North":
                 keyboard = [[]]
                 keyboard_index = 0
@@ -138,7 +138,8 @@ def respond():
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
                 bot.sendMessage(chat_id=chat_id,
-                                text="Here are the bouldering gyms located at the North-East\n/places to find other gyms",
+                                text="Here are the bouldering gyms located at the North-East\n/places to find other "
+                                     "gyms",
                                 reply_markup=reply_markup)
 
             elif text == "🎋 East":
@@ -192,9 +193,15 @@ def respond():
             else:
                 # for loop to find such a gym
                 has_gym = False
+                found_exact_gym = False
+                has_gym_list = False
+
+                keyboard = [[]]
+                keyboard_index = 0
                 for gym_info in all_boulder_places['boulderGyms']:
-                    if text.lower().startswith(gym_info['name'].lower()):
+                    if gym_info['name'].lower() == text.lower():
                         has_gym = True
+                        found_exact_gym = True
                         area = gym_info['category']
                         if area == "North":
                             area = " 🔥"
@@ -213,6 +220,20 @@ def respond():
 
                         bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'), caption=caption)
                         break
+
+                    elif gym_info['name'].lower().startswith(text.lower()):
+                        has_gym = True
+                        has_gym_list = True
+
+                        keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+                        keyboard_index = keyboard_index + 1
+
+                # if has a list of gyms and no exact gyms
+                if has_gym_list and not found_exact_gym:
+                    reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+                    bot.sendMessage(chat_id=chat_id,
+                                    text="Here are the possible bouldering gyms you are searching for!",
+                                    reply_markup=reply_markup)
 
                 # no such command, error message
                 if not has_gym:

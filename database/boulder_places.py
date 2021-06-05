@@ -49,7 +49,7 @@ boulder_gyms = '''
         "lng": 103.79434329774709,
         "category": "West",
         "url": "https://www.lighthouseclimbing.com/",
-        "booking": "Lighthouse Climbing mobile app! 📲 iOS:https://apps.apple.com/dm/app/lighthouse-climbing-gym/id1511580846 GooglePlaystore:https://play.google.com/store/apps/details?id=com.FitDegree.LighthouseClimbingGym&hl=en"
+        "booking": "Lighthouse Climbing app 📲 iOS: https://apps.apple.com/dm/app/lighthouse-climbing-gym/id1511580846 Google Playstore: https://play.google.com/store/apps/details?id=com.FitDegree.LighthouseClimbingGym&hl=en"
         },
         {
         "name": "FitBloc",
@@ -59,7 +59,7 @@ boulder_gyms = '''
         "lng": 103.79040556711915,
         "category": "West",
         "url": "https://fitbloc.com/",
-        "booking": "Fit·Bloc mobile app! 📲 iOS:https://apps.apple.com/us/app/fit-bloc/id1435631462 GooglePlaystore:https://play.google.com/store/apps/details?id=com.fitnessmobileapps.fitbloc&hl=en"
+        "booking": "Fit·Bloc app 📲 iOS: https://apps.apple.com/us/app/fit-bloc/id1435631462 Google Playstore: https://play.google.com/store/apps/details?id=com.fitnessmobileapps.fitbloc&hl=en"
         },
         {
         "name": "Ground Up Climbing",
@@ -149,7 +149,7 @@ boulder_gyms = '''
         "lng": 103.849209546975,
         "category": "Central",
         "url": "https://www.boulderm.com/",
-        "booking": "Boulder Movement mobile app! 📲 iOS:https://apps.apple.com/us/app/boulder-movement/id1269188380 GooglePlaystore:https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
+        "booking": "Boulder Movement app 📲 iOS: https://apps.apple.com/us/app/boulder-movement/id1269188380 Google Playstore: https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
         },
         {
         "name": "Boulder Movement Tai Seng",
@@ -159,8 +159,11 @@ boulder_gyms = '''
         "lng": 103.88910943643879,
         "category": "East",
         "url": "https://www.boulderm.com/",
-        "booking": "Boulder Movement mobile app! 📲 iOS:https://apps.apple.com/us/app/boulder-movement/id1269188380 GooglePlaystore:https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
+        "booking": "Boulder Movement app 📲 iOS: https://apps.apple.com/us/app/boulder-movement/id1269188380 Google Playstore: https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
         }
     ]
 }
 '''
+
+a = ("The Rock School".lower()).startswith("The rock".lower())
+print(a)
