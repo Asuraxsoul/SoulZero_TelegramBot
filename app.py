@@ -17,7 +17,6 @@ BOTNAME = bot_user_name
 MY_CHAT_ID = my_chat_id
 all_boulder_places = json.loads(boulder_gyms)
 
-can_send_location = False
 isFeedback = False
 
 help_message = """🗺 /places to enquire Singapore's bouldering gyms categorized by locations,
@@ -26,7 +25,7 @@ help_message = """🗺 /places to enquire Singapore's bouldering gyms categorize
 📝 /feedback to feedback inaccurate information provided or improvements to the bot,
 ℹ /help to enquire on available commands."""
 welcome_message = "Welcome to Boulder_SG 🧗 @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
-                                                        "Singapore!\n\n" + help_message
+                                                           "Singapore!\n\n" + help_message
 error_message = """Bot does not understand your input, please try typing /help to view commands"""
 
 # start the flask app
@@ -38,19 +37,12 @@ def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
     chat_id = update.message.chat.id
-    print("update: ", update)
-    print("update2: ", update.message)
-
-    global can_send_location
-
     location = update.message.location
+
     if location is not None:
-        can_send_location = False
-        print("my location: ", location)
+        # Haversine Formula to calculate distance between 2 lat-lng points
         latitude = location.latitude
         longitude = location.longitude
-
-        # Haversine Formula to calculate distance between 2 lat-lng points
         earth_radius = 6378.0
         within_distance = 5.0
         lat1 = math.radians(latitude)
@@ -74,7 +66,8 @@ def respond():
             keyboard_index = keyboard_index + 1
         reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
-        bot.sendMessage(chat_id=chat_id, text="You are currently at " + "latitude: " + str(latitude) + ", longitude: "
+        bot.sendMessage(chat_id=chat_id,
+                        text="You are currently at " + "latitude: " + str(latitude) + ", longitude: "
                         + str(longitude) + ".\nThe nearest gyms (within 5km, if any) are shown below.",
                         reply_markup=reply_markup)
 
@@ -111,7 +104,7 @@ def respond():
 
             elif text == "/places":
                 keyboard = [[telegram.KeyboardButton('🔥 North')],
-                            [telegram.KeyboardButton('🌊 South')],
+                            [telegram.KeyboardButton('🌊 North-East')],
                             [telegram.KeyboardButton('🎋 East')],
                             [telegram.KeyboardButton('🎐 West')],
                             [telegram.KeyboardButton('⛰ Central')]]
@@ -121,7 +114,7 @@ def respond():
                                 reply_markup=reply_markup)
                 # activate choice
 
-# send the whole list of bouldering gyms based on north south east west central areas ---------------------------------
+# send the whole list of bouldering gyms based on north north-east east west central areas ---------------------------------
             elif text == "🔥 North":
                 keyboard = [[]]
                 keyboard_index = 0
@@ -135,17 +128,17 @@ def respond():
                                 text="Here are the bouldering gyms located at the North\n/places to find other gyms",
                                 reply_markup=reply_markup)
 
-            elif text == "🌊 South":
+            elif text == "🌊 North-East":
                 keyboard = [[]]
                 keyboard_index = 0
                 for gym_info in all_boulder_places['boulderGyms']:
-                    if gym_info['category'] == 'South':
+                    if gym_info['category'] == 'North-East':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
                 bot.sendMessage(chat_id=chat_id,
-                                text="Here are the bouldering gyms located at the South\n/places to find other gyms",
+                                text="Here are the bouldering gyms located at the North-East\n/places to find other gyms",
                                 reply_markup=reply_markup)
 
             elif text == "🎋 East":
@@ -189,7 +182,6 @@ def respond():
 # ---------------------------------------------------------------------------------------------------------------------
 
             elif text == "/nearby":
-                can_send_location = True
                 keyboard = [[telegram.KeyboardButton('📍 Location', request_location=True)]]
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
 
@@ -203,8 +195,21 @@ def respond():
                 for gym_info in all_boulder_places['boulderGyms']:
                     if text.lower() == gym_info['name'].lower():
                         has_gym = True
-                        caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
-                                    + gym_info['booking'] + "\nMore details: " + gym_info['url']
+                        area = gym_info['category']
+                        if area == "North":
+                            area = " 🔥"
+                        elif area == "North-East":
+                            area = " 🌊"
+                        elif area == "East":
+                            area = " 🎋"
+                        elif area == "West":
+                            area = " 🎐"
+                        elif area == "Central":
+                            area = " ⛰"
+                        caption = gym_info['name'] + area \
+                                  + "\nLocation: " + gym_info['location'] \
+                                  + "\nBooking: " + gym_info['booking'] \
+                                  + "\nMore details: " + gym_info['url']
 
                         bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'), caption=caption)
                         break
