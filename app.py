@@ -82,11 +82,11 @@ def respond():
         else:
             text = update.message.text.encode('utf-8').decode()
             print("got text message: ", text)
-            print("isFeedback: ", isFeedback)
+
 
 # feedback function ---------------------------------------------------------------------------------------------------
             global isFeedback
-
+            print("isFeedback: ", isFeedback)
             if isFeedback:
                 isFeedback = False
                 feedback = "Feedback: " + text
