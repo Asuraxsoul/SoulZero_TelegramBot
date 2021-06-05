@@ -3,6 +3,7 @@ from flask import Flask, request
 import telegram
 from telebot.credentials import bot_token, bot_user_name, URL, my_chat_id
 from database.boulder_places import boulder_gyms
+import math
 
 global bot
 global TOKEN
@@ -36,11 +37,9 @@ app = Flask(__name__)
 def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
-
+    chat_id = update.message.chat.id
     print("update: ", update)
     print("update2: ", update.message)
-
-    chat_id = update.message.chat.id
 
     global can_send_location
 
@@ -51,9 +50,33 @@ def respond():
         latitude = location.latitude
         longitude = location.longitude
 
-        # TODO: insert some python API to find nearby gyms
+        # Haversine Formula to calculate distance between 2 lat-lng points
+        earth_radius = 6378.0
+        within_distance = 5.0
+        lat1 = math.radians(latitude)
+        lng1 = math.radians(longitude)
+
+        keyboard = [[]]
+        keyboard_index = 0
+        for gym_info in all_boulder_places['boulderGyms']:
+            lat2 = math.radians(gym_info['lat'])
+            lng2 = math.radians(gym_info['lng'])
+            dlat = lat2 - lat1
+            dlng = lng2 - lng1
+
+            a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlng / 2) ** 2
+            c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+            distance = earth_radius * c
+
+            if distance <= within_distance:
+                keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
+
+            keyboard_index = keyboard_index + 1
+        reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
         bot.sendMessage(chat_id=chat_id, text="You are currently at " + "latitude: " + str(latitude) + ", longitude: "
-                        + str(longitude) + ".\nThe nearest gyms (within 3km, if any) are shown below.")
+                        + str(longitude) + ".\nThe nearest gyms (within 5km, if any) are shown below.",
+                        reply_markup=reply_markup)
 
         return 'ok'
 
@@ -64,8 +87,6 @@ def respond():
 
         else:
             text = update.message.text.encode('utf-8').decode()
-
-            # for debugging purposes only
             print("got text message: ", text)
 
 # feedback function ---------------------------------------------------------------------------------------------------
@@ -108,8 +129,8 @@ def respond():
                     if gym_info['category'] == 'North':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the North\n/places to find other gyms",
                                 reply_markup=reply_markup)
@@ -121,8 +142,8 @@ def respond():
                     if gym_info['category'] == 'South':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the South\n/places to find other gyms",
                                 reply_markup=reply_markup)
@@ -134,8 +155,8 @@ def respond():
                     if gym_info['category'] == 'East':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the East\n/places to find other gyms",
                                 reply_markup=reply_markup)
@@ -147,8 +168,8 @@ def respond():
                     if gym_info['category'] == 'West':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the West\n/places to find other gyms",
                                 reply_markup=reply_markup)
@@ -160,8 +181,8 @@ def respond():
                     if gym_info['category'] == 'Central':
                         keyboard.insert(keyboard_index, [telegram.KeyboardButton(gym_info['name'])])
                     keyboard_index = keyboard_index + 1
-
                 reply_markup = telegram.ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
+
                 bot.sendMessage(chat_id=chat_id,
                                 text="Here are the bouldering gyms located at the Central\n/places to find other gyms",
                                 reply_markup=reply_markup)
@@ -184,6 +205,7 @@ def respond():
                         has_gym = True
                         caption = gym_info['name'] + "\nLocation: " + gym_info['location'] + "\nBooking: " \
                                     + gym_info['booking'] + "\nMore details: " + gym_info['url']
+
                         bot.sendPhoto(chat_id=chat_id, photo=open(gym_info['image'], 'rb'), caption=caption)
                         break
 

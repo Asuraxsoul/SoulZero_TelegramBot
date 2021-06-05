@@ -22,6 +22,7 @@
 
 ## Idea Extensions
 1. Opening and closing times (put the timing w picture)
+2. Set alerts for upcoming climbing slot
 
 ### Python Libraries
 1. json
