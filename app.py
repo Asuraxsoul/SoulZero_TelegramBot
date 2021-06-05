@@ -193,7 +193,7 @@ def respond():
                 # for loop to find such a gym
                 has_gym = False
                 for gym_info in all_boulder_places['boulderGyms']:
-                    if text.lower() == gym_info['name'].lower():
+                    if text.lower().startswith(gym_info['name'].lower()):
                         has_gym = True
                         area = gym_info['category']
                         if area == "North":
