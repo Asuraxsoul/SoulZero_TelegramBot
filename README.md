@@ -1,5 +1,5 @@
 # **Telegram Bot** - Boulder_SG
-## ~Singapore bouldering gym finder~
+> ## Singapore bouldering gym finder
 ### Telegram bot username: _@SoulZero_bot_
 
 ## Bot Functions
@@ -29,6 +29,11 @@
 1. Opening and closing times (put the timing w picture)
 2. Set alerts for upcoming climbing slot
 3. Set gyms that user has been before and never been before
+
+### Note
+1. This bot is strictly free to use for people in Singapore.
+2. Do not use my credentials, Telegram Bot API keys are easy to get via @BotFather.
+3. Thank you for reading my repository and feel free to give me any feedback, enjoy!
 
 ### Python Libraries
 1. json
