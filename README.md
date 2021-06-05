@@ -15,7 +15,9 @@
 > 1. Gives user the full list of gyms in Singapore
 
 ### gym_name:
-> 1. Gives detail about the gym
+> 1. Gives detail about the gym based on user query
+> 2. If user keys in full gym name, the bot will give detail about the gym
+> 3. If user keys in incomplete gym name, the bot will give gym recommendations
 
 ### /feedback:
 > 1. Sends me a query / improvement about the bot

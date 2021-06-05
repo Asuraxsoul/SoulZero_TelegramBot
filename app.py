@@ -20,9 +20,9 @@ all_boulder_places = json.loads(boulder_gyms)
 isFeedback = False
 
 help_message = """🗺 /places to enquire Singapore's bouldering gyms categorized by locations,
-🧭 /nearby to enquire Singapore bouldering gyms near me (if any, within 5km radius),
 🤸 /all to see all available bouldering gyms in Singapore,
 🎯 gym_name to enquire more details about the gym,
+🧭 /nearby to enquire Singapore bouldering gyms near me (if any, within 5km radius),
 📝 /feedback to feedback inaccurate information provided or improvements to the bot,
 ℹ /help to enquire on available commands."""
 welcome_message = "Welcome to Boulder_SG 🧗 @" + BOTNAME + ", this bot will help you to find a bouldering gym in " \
@@ -82,6 +82,7 @@ def respond():
         else:
             text = update.message.text.encode('utf-8').decode()
             print("got text message: ", text)
+            print("isFeedback: ", isFeedback)
 
 # feedback function ---------------------------------------------------------------------------------------------------
             global isFeedback
