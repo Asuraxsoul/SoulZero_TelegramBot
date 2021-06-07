@@ -2,6 +2,8 @@
 > ## Singapore bouldering gym finder
 ### Telegram bot username: _@SoulZero_bot_
 
+https://user-images.githubusercontent.com/54731174/120894309-53c17900-c64a-11eb-9de3-62cd5e226629.mp4
+
 ## Bot Functions
 ### /places: 
 > 1. Notify north, north-east, east, west and central options
