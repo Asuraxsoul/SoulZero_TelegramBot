@@ -30,10 +30,16 @@
 2. Set alerts for upcoming climbing slot
 3. Set gyms that user has been before and never been before
 
-### Note
+### Note!
 1. This bot is strictly free to use for people in Singapore.
 2. Do not use my credentials, Telegram Bot API keys are easy to get via @BotFather.
 3. Thank you for reading my repository and feel free to give me any feedback, enjoy!
+
+### Learning Points
+1. Telegram Bot API
+   - Various UI like Keyboards, Location Services, Json data storage on web
+2. Basic WebHook
+3. Json data storage
 
 ### Python Libraries
 1. json

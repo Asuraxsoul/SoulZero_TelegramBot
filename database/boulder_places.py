@@ -47,7 +47,7 @@ boulder_gyms = '''
         "location": "44 Pasir Panjang Road #B-02, Singapore 118504",
         "lat": 1.2750034514292132,
         "lng": 103.79434329774709,
-        "category": "West",
+        "category": "Central",
         "url": "https://www.lighthouseclimbing.com/",
         "booking": "Lighthouse app 📲             iOS: https://apps.apple.com/dm/app/lighthouse-climbing-gym/id1511580846                                 Google Playstore: https://play.google.com/store/apps/details?id=com.FitDegree.LighthouseClimbingGym&hl=en"
         },
@@ -152,6 +152,16 @@ boulder_gyms = '''
         "booking": "Boulder Movement app 📲 iOS: https://apps.apple.com/us/app/boulder-movement/id1269188380 Google Playstore: https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
         },
         {
+        "name": "Boulder Movement Rochor",
+        "image": "./database/photos/boulderMovementRochorImage.jpg",
+        "location": "2 Serangoon Rd, #02-12 Tekka Place, Singapore 218227",
+        "lat": 1.3052052201955553,
+        "lng": 103.8512061588615,
+        "category": "Central",
+        "url": "https://www.boulderm.com/",
+        "booking": "Boulder Movement app 📲 iOS: https://apps.apple.com/us/app/boulder-movement/id1269188380 Google Playstore: https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
+        },
+        {
         "name": "Boulder Movement Tai Seng",
         "image": "./database/photos/boulderMovementTaiSengImage.jpg",
         "location": "18 Tai Seng St, #01-09, Singapore 539775",
@@ -160,6 +170,26 @@ boulder_gyms = '''
         "category": "East",
         "url": "https://www.boulderm.com/",
         "booking": "Boulder Movement app 📲 iOS: https://apps.apple.com/us/app/boulder-movement/id1269188380 Google Playstore: https://play.google.com/store/apps/details?hl=en&id=com.fitnessmobileapps.bouldermovement"
+        },
+        {
+        "name": "Boulder Planet",
+        "image": "./database/photos/boulderPlanetImage.jpg",
+        "location": "604 Sembawang Rd, #B1-22/23 Sembawang Shopping Centre, Singapore 758459",
+        "lat": 1.4420604017519199,
+        "lng": 103.82514280184957,
+        "category": "North",
+        "url": "https://www.boulderplanet.sg/",
+        "booking": "https://www.boulderplanet.sg/bookings"
+        },
+        {
+        "name": "Boruda Climbing",
+        "image": "./database/photos/borudaClimbingImage.jpg",
+        "location": "991A Alexandra Rd, Singapore 119969",
+        "lat": 1.2743134523648887,
+        "lng": 103.80362144047581,
+        "category": "Central",
+        "url": "https://www.boruda.sg/",
+        "booking": "Available in August 2021!"
         }
     ]
 }
